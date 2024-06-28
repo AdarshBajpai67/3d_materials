@@ -1,8 +1,12 @@
+require('dotenv').config();
 const mongoose=require('mongoose');
+
+const mongo_url=process.env.MONGO_URL;
+
 
 const connectToDB=async()=>{
     try{
-        await mongoose.connect('mongodb://127.0.0.1:27017/dexterous_assign');
+        await mongoose.connect(mongo_url);
         console.log('Connected to MongoDB');
     }catch(err){
         console.error('Error connecting to MongoDB',err);
