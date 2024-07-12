@@ -15,14 +15,14 @@ exports.createMaterial = async (req, res) => {
     }
 
     const image = req.file;
-    console.log('Uploaded image details:', image);
+    // console.log('Uploaded image details:', image);
 
     try {
         const { presignedUrl, key } = await generatePresignedUrl(image.originalname, image.mimetype);
-        console.log("Generated presigned URL and key:", presignedUrl, key);
+        // console.log("Generated presigned URL and key:", presignedUrl, key);
 
         // Ensure the buffer is logged correctly
-        console.log('Image buffer length:', image.buffer.length);
+        // console.log('Image buffer length:', image.buffer.length);
 
         await uploadFileToS3(presignedUrl, image.buffer, image.mimetype);
 
@@ -32,6 +32,7 @@ exports.createMaterial = async (req, res) => {
         const newMaterial = new Material({ name, technology, colors, pricePerGram, applicationTypes, imageUrl });
         await newMaterial.save();
         // console.log('Material saved to database:', newMaterial);
+
         res.status(201).json({ message: 'Material created successfully', newMaterial });
     } catch (err) {
         console.error('Error creating material:', err.message);
@@ -85,6 +86,7 @@ exports.updateMaterial = async (req, res) => {
             // console.log('Image buffer length:', image.buffer.length);
             await uploadFileToS3(presignedUrl, image.buffer, image.mimetype);
             material.imageUrl = `https://${AWS_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com${key}`;
+
         }
 
         material.name=name||material.name;   
