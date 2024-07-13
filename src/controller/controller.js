@@ -47,6 +47,7 @@ exports.getAllMaterials=async (req,res)=>{
         // console.log(materials);
         res.status(200).json(materials);
     }catch(err){
+        console.error('Error getting all materials:', err.message);
         res.status(500).json({error:err.message});
     }
 }
@@ -61,6 +62,7 @@ exports.getMaterialById = async (req, res) => {
         const imageUrl=await generatePresignedGetUrl(s3key);
         res.status(200).json({...material.toObject(),imageUrl});
     }catch(err){
+        console.error('Error getting material by ID:', err.message);
         res.status(500).json({error:err.message});
     }
 }
@@ -99,6 +101,7 @@ exports.updateMaterial = async (req, res) => {
         await material.save();
         res.status(200).json({message:'Material updated successfully',material});
     }catch(err){
+        console.error('Error updating material:', err.message);
         res.status(500).json({error:err.message});
     }
 }
