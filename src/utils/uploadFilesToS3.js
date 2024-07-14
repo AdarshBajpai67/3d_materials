@@ -10,7 +10,6 @@ async function uploadFileToS3(presignedUrl, fileBuffer, fileType) {
                 'Content-Type': fileType
             }
         });
-
         // console.log('Upload response status:', response.status);
         // console.log('Upload response headers:', response.headers);
     } catch (err) {
